@@ -1,7 +1,7 @@
 import {Body, Controller, Inject, Post} from '@nestjs/common';
 import {MessageService} from "./message.service";
 import {SendTxtMessageDto} from "./dto/send-txt-message.dto";
-import {SendMessageResponse} from "../interfaces/message";
+import {SendMessageResponse} from "../interfaces/message.interface";
 
 @Controller('message')
 export class MessageController {

@@ -3,7 +3,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {MessagesBase} from "./message.entity";
 import {Repository} from "typeorm";
 import {SendTxtMessageDto} from "./dto/send-txt-message.dto";
-import {SendMessageResponse} from "../interfaces/message";
+import {SendMessageResponse} from "../interfaces/message.interface";
 
 @Injectable()
 export class MessageService {
