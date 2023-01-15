@@ -1,20 +1,21 @@
-import { Module } from '@nestjs/common';
+import {Inject, Module} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
-import { MessageController } from './message/message.controller';
-import { MessageService } from './message/message.service';
 import { MessageModule } from './message/message.module';
+import {ConfigModule} from "@nestjs/config";
+
 
 @Module({
   imports: [
-  TypeOrmModule.forFeature(),
-  TypeOrmModule.forRoot({
-    type: 'sqlite',
-    database: 'SQLiteDatabase.db',
-    entities: ['dist/**/**.entity{.ts,.js}'],
-    logging: true,
-    synchronize: true,
+     ConfigModule.forRoot(),
+      TypeOrmModule.forFeature(),
+      TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: process.env.DATABASE_NAME,
+      entities: ['dist/**/**.entity{.ts,.js}'],
+      logging: true,
+      synchronize: true,
   }),
   MessageModule,
   ],
