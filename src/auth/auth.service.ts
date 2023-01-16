@@ -8,7 +8,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {AuthLoginDto} from "./dto/auth.dto";
 import {hashPwd} from "../utility/hash";
-import * as process from "process";
 
 @Injectable()
 export class AuthService {
@@ -26,7 +25,7 @@ export class AuthService {
         const expiresIn = 60 * 60 * 24;
         const accessToken = sign(
             payload,
-            process.env.JWT_KEY, //<- your own secret key
+            process.env.JWT_KEY,
             { expiresIn },
         );
         return {
@@ -40,9 +39,9 @@ export class AuthService {
         let userWithThisToken = null;
         do {
             token = uuid();
-            userWithThisToken = await this.userRepository.findOneBy({
+            userWithThisToken = await this.userRepository.findOne({where: {
                 currentTokenID: token,
-            });
+            }});
         } while (!!userWithThisToken);
 
         user.currentTokenID = token;
@@ -53,10 +52,10 @@ export class AuthService {
 
     async login(req: AuthLoginDto, res: Response): Promise<any> {
         try {
-            const user = await this.userRepository.findOneBy({
-                email: req.email,
-                pwdHash: hashPwd(req.pwd),
-            });
+            const user = await this.userRepository.findOne({where: {
+                    email: req.email,
+                    pwdHash: hashPwd(req.pwd),
+                }});
 
             if (!user) {
                 return res.json({ error: 'Invalid login data!' });
