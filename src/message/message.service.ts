@@ -4,6 +4,7 @@ import {MessagesBase} from "./message.entity";
 import {Repository} from "typeorm";
 import {SendTxtMessageDto} from "./dto/send-txt-message.dto";
 import {SendMessageResponse} from "../interfaces/message.interface";
+import {User} from "../user/user.entity";
 
 @Injectable()
 export class MessageService {
@@ -14,10 +15,10 @@ export class MessageService {
     }
 
 
-    async handleMessage(newMessage: SendTxtMessageDto): Promise<SendMessageResponse>
+    async handleMessage(newMessage: SendTxtMessageDto, user: User): Promise<SendMessageResponse>
     {
         const message = new MessagesBase();
-        message.messageFrom = newMessage.messageFrom;
+        message.messageFrom = user.id;
         message.messageTo = newMessage.messageTo;
         message.messagePayload = newMessage.messagePayload;
         await this.messagesBaseRepository.save(message);

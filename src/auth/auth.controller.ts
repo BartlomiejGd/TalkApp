@@ -13,10 +13,7 @@ export class AuthController {
     }
 
     @Post('/login')
-    async phoneRegister(
-        @Body() req: AuthLoginDto,
-        @Res() res: Response,
-    ): Promise<any> {
+    async login(@Body() req: AuthLoginDto, @Res() res: Response): Promise<any> {
         return this.authService.login(req, res);
     }
 
