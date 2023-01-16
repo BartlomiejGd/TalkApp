@@ -3,7 +3,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {MessagesBase} from "./message.entity";
 import {Repository} from "typeorm";
 import {SendTxtMessageDto} from "./dto/send-txt-message.dto";
-import {SendMessageResponse} from "../interfaces/message.interface";
+import {GetConversationResponse, SendMessageResponse} from "../interfaces/message.interface";
 import {User} from "../user/user.entity";
 
 @Injectable()
@@ -28,5 +28,7 @@ export class MessageService {
         };
     }
 
-
+    async getConversation(messageConversationId: string): Promise<GetConversationResponse>{
+        return await this.messagesBaseRepository.find(); //todo complite it!
+    }
 }

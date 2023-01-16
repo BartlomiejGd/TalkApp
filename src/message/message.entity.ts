@@ -18,5 +18,7 @@ export class MessagesBase{
     @Column({default: ()=> 'CURRENT_TIMESTAMP'})
     messageTimestamp: string;
 
+    @Column( {default: null})
+    messageConversationId: string;
 
 }

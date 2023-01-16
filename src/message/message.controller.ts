@@ -1,7 +1,7 @@
-import {Body, Controller, Inject, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Inject, Param, Post, UseGuards} from '@nestjs/common';
 import {MessageService} from "./message.service";
 import {SendTxtMessageDto} from "./dto/send-txt-message.dto";
-import {SendMessageResponse} from "../interfaces/message.interface";
+import {GetConversationResponse, SendMessageResponse} from "../interfaces/message.interface";
 import {AuthGuard} from "@nestjs/passport";
 import {UserObj} from "../decorators/user-obj.decorator";
 import {User} from "../user/user.entity";
@@ -16,11 +16,15 @@ export class MessageController {
 
     @UseGuards(AuthGuard('jwt'))
     @Post('/sendTxtMessage')
-    sendTxtMessage(@Body() newTxtMessage: SendTxtMessageDto,
+    async sendTxtMessage(@Body() newTxtMessage: SendTxtMessageDto,
                    @UserObj() user: User): Promise<SendMessageResponse> {
         return this.messageSevice.handleMessage(newTxtMessage, user);
     }
 
-
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/GetConversation/:messageConversationId')
+    getConversation(@Param(':messageConversationId') messageConversationId: string): Promise<GetConversationResponse>{
+        return this.messageSevice.getConversation(messageConversationId);
+    }
 
 }

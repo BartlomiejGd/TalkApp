@@ -10,3 +10,4 @@ export interface SendMessageResponse {
     isSuccess: boolean;
 }
 
+export type GetConversationResponse = GetMessageResponse[];
