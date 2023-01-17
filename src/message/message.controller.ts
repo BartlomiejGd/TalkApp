@@ -22,8 +22,8 @@ export class MessageController {
     }
 
     @UseGuards(AuthGuard('jwt'))
-    @Get('/GetConversation/:messageConversationId')
-    getConversation(@Param(':messageConversationId') messageConversationId: string): Promise<GetConversationResponse>{
+    @Get('/GetConversation/:ConversationId')
+    getConversation(@Param('ConversationId') messageConversationId: string): Promise<GetConversationResponse>{
         return this.messageSevice.getConversation(messageConversationId);
     }
 

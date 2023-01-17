@@ -28,7 +28,7 @@ export class MessageService {
         };
     }
 
-    async getConversation(messageConversationId: string): Promise<GetConversationResponse>{
-        return await this.messagesBaseRepository.find(); //todo complite it!
+    async getConversation(ConversationId: string): Promise<GetConversationResponse>{
+        return await this.messagesBaseRepository.findBy( {messageConversationId : ConversationId}); //todo complite it!
     }
 }
