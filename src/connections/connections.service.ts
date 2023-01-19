@@ -34,14 +34,13 @@ export class ConnectionsService {
     async listOfConnections(user: User): Promise<AvailableConnection[]>{
 
         const result = [] as Array <AvailableConnection>;
-
         const listOfRequestConnection = await this.connectionsRepository.find({
-            select: ['sendTo'],
+            select: ['sendTo', 'id'],
             where: {isAccepted: true}
         });
 
         listOfRequestConnection.map((obj) => {
-            result.push({availableUserId: obj.sendTo})
+            result.push({connectionId: obj.id, availableUserId: obj.sendTo})
         })
 
         console.log(result)

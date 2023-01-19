@@ -5,5 +5,6 @@ export interface SendNewConnectionResponse {
 }
 
 export interface AvailableConnection {
+    connectionId: string;
     availableUserId: string
 }
