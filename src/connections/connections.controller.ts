@@ -4,7 +4,10 @@ import {AuthGuard} from "@nestjs/passport";
 import {ConnectionsDto} from "./dto/connections.dto";
 import {UserObj} from "../decorators/user-obj.decorator";
 import {User} from "../user/user.entity";
-import {ListOfConnectionsResponse, SendNewConnectionResponse} from "../interfaces/connections.interface";
+import {
+ AvailableConnection,
+ SendNewConnectionResponse
+} from "../interfaces/connections.interface";
 
 @Controller('connections')
 export class ConnectionsController {
@@ -23,7 +26,7 @@ export class ConnectionsController {
 
  @UseGuards(AuthGuard('jwt'))
  @Get('/getConnectionsList')
- async listOfConnections(@UserObj() user: User): Promise<ListOfConnectionsResponse>{
+ async listOfConnections(@UserObj() user: User): Promise<AvailableConnection[]>{
   return this.connectionsService.listOfConnections(user);
  }
 }

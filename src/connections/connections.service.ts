@@ -4,7 +4,10 @@ import {Connections} from "./connections.entity";
 import {Repository} from "typeorm";
 import {ConnectionsDto} from "./dto/connections.dto";
 import {User} from "../user/user.entity";
-import {ListOfConnectionsResponse, SendNewConnectionResponse} from "../interfaces/connections.interface";
+import {
+    AvailableConnection,
+    SendNewConnectionResponse
+} from "../interfaces/connections.interface";
 
 @Injectable()
 export class ConnectionsService {
@@ -28,8 +31,21 @@ export class ConnectionsService {
        };
     }
 
-    async listOfConnections(user: User): Promise<ListOfConnectionsResponse>{
+    async listOfConnections(user: User): Promise<AvailableConnection[]>{
 
-   return
+        const result = [] as Array <AvailableConnection>;
+
+        const listOfRequestConnection = await this.connectionsRepository.find({
+            select: ['sendTo'],
+            where: {isAccepted: true}
+        });
+
+        listOfRequestConnection.map((obj) => {
+            result.push({availableUserId: obj.sendTo})
+        })
+
+        console.log(result)
+
+        return result ;
     }
 }

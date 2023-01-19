@@ -5,7 +5,5 @@ export interface SendNewConnectionResponse {
 }
 
 export interface AvailableConnection {
-    availableUser: string
+    availableUserId: string
 }
-
-export type ListOfConnectionsResponse = AvailableConnection[];
