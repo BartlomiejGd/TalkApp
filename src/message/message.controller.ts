@@ -5,7 +5,7 @@ import {GetConversationResponse, SendMessageResponse} from "../interfaces/messag
 import {AuthGuard} from "@nestjs/passport";
 import {UserObj} from "../decorators/user-obj.decorator";
 import {User} from "../user/user.entity";
-import {AllowSendMessageGuard} from "../guard/allowSendMessage.guard";
+import {SendMessageGuard} from "../guard/sendMessage.guard";
 
 @Controller('message')
 export class MessageController {
@@ -16,7 +16,7 @@ export class MessageController {
     }
 
     @UseGuards(AuthGuard('jwt'))
-    @UseGuards(AllowSendMessageGuard)
+    @UseGuards(SendMessageGuard)
     @Post('/sendTxtMessage')
     async sendTxtMessage(@Body() newTxtMessage: SendTxtMessageDto,
                    @UserObj() user: User): Promise<SendMessageResponse> {
