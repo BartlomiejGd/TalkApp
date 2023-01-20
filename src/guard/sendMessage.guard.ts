@@ -1,5 +1,6 @@
 import {ExecutionContext, Injectable} from "@nestjs/common";
 import {AuthGuard} from "@nestjs/passport";
+import {SendTxtMessageDto} from "../message/dto/send-txt-message.dto";
 
 @Injectable()
 export class SendMessageGuard extends AuthGuard('jwt') {
@@ -11,13 +12,10 @@ export class SendMessageGuard extends AuthGuard('jwt') {
             // unsuccessful authentication return false
             return false;
         }
-
         // successfull authentication, user is injected
         const {user} = context.switchToHttp().getRequest();
 
-        //check user connection to message reciver
-
-        console.log('id usera login '+user.id)
+            //Finish it!
 
         return false
     }
