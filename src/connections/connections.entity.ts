@@ -14,8 +14,8 @@ export class Connections{
     @Column()
     sendTo: string;
 
-    @Column({default: false})
-    isAccepted: boolean;
+    @Column({default: 0})
+    isAccepted: number;
 
     @Column({default: ()=> 'CURRENT_TIMESTAMP'})
     createdAt: string;

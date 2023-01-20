@@ -3,11 +3,12 @@ import {MessageController} from "./message.controller";
 import {MessageService} from "./message.service";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {MessagesBase} from "./message.entity";
+import {Connections} from "../connections/connections.entity";
 
 @Module({
 
     imports: [
-        TypeOrmModule.forFeature([MessagesBase])
+        TypeOrmModule.forFeature([MessagesBase, Connections])
     ],
     controllers: [MessageController],
     providers: [MessageService],

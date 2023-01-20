@@ -16,7 +16,7 @@ export class MessageController {
     }
 
     @UseGuards(AuthGuard('jwt'))
-    @UseGuards(SendMessageGuard)
+   // @UseGuards(SendMessageGuard)
     @Post('/sendTxtMessage')
     async sendTxtMessage(@Body() newTxtMessage: SendTxtMessageDto,
                    @UserObj() user: User): Promise<SendMessageResponse> {

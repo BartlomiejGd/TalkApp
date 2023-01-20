@@ -22,7 +22,7 @@ export class ConnectionsService {
         const connections = new Connections();
         connections.sendFrom = user.id
         connections.sendTo = newConnection.sendTo
-        connections.isAccepted = true; //TODO it should be replace to false when AcceptConnections will be created
+        connections.isAccepted = 1; //TODO it should be replace to false when AcceptConnections will be created
 
       await this.connectionsRepository.save(connections);
 
@@ -36,7 +36,7 @@ export class ConnectionsService {
         const result = [] as Array <AvailableConnection>;
         const listOfRequestConnection = await this.connectionsRepository.find({
             select: ['sendTo', 'id'],
-            where: {isAccepted: true}
+            where: {isAccepted: 1}
         });
 
         listOfRequestConnection.map((obj) => {
