@@ -5,8 +5,9 @@ import {NewConnectionsDto} from "./dto/newConnectionsDto";
 import {UserObj} from "../decorators/user-obj.decorator";
 import {User} from "../user/user.entity";
 import {
- AvailableConnectionResponse, ConnectionToAcceptResponse,
- SendNewConnectionResponse
+    AcceptConnectionResponse,
+    AvailableConnectionResponse, ConnectionToAcceptResponse,
+    SendNewConnectionResponse
 } from "../interfaces/connections.interface";
 
 @Controller('connections')
@@ -23,9 +24,15 @@ export class ConnectionsController {
   return this.connectionsService.createConnection(newConnection, user);
  }
   @UseGuards(AuthGuard('jwt'))
-  @Get('getConnectionListToAccept')
+  @Get('/getConnectionListToAccept')
   async listOfConnectionsToAccept(@UserObj() user: User): Promise<ConnectionToAcceptResponse[]>{
   return this.connectionsService.listOfConnectionToAccept(user)
+}
+
+@UseGuards(AuthGuard('jwt'))
+@Post('/acceptConnection')
+async acceptConnection(@UserObj() user: User): Promise<AcceptConnectionResponse>{
+     return
 }
 
   @UseGuards(AuthGuard('jwt'))

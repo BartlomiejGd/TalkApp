@@ -15,3 +15,9 @@ export interface ConnectionToAcceptResponse
     userSenderId: string;
     date: string;
 }
+
+export interface AcceptConnectionResponse
+{
+    isSuccess: boolean;
+
+}

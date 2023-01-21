@@ -5,6 +5,7 @@ import {Repository} from "typeorm";
 import {NewConnectionsDto} from "./dto/newConnectionsDto";
 import {User} from "../user/user.entity";
 import {
+    AcceptConnectionResponse,
     AvailableConnectionResponse, ConnectionToAcceptResponse,
     SendNewConnectionResponse
 } from "../interfaces/connections.interface";
@@ -50,7 +51,14 @@ export class ConnectionsService {
         return result;
     }
 
+    async acceptConnection(user: User): Promise<AcceptConnectionResponse>
+    {
+        //todo finish it
 
+        return {
+            isSuccess: true
+        }
+    }
 
     async listOfAvailableConnections(user: User): Promise<AvailableConnectionResponse[]>{
 
