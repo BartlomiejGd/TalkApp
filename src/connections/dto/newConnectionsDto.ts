@@ -1,4 +1,4 @@
-export  class ConnectionsDto{
+export  class NewConnectionsDto {
     sendTo: string;
 
     timestamp: string;

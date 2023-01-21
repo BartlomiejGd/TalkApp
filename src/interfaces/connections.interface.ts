@@ -4,7 +4,14 @@ export interface SendNewConnectionResponse {
     isSuccess: boolean;
 }
 
-export interface AvailableConnection {
+export interface AvailableConnectionResponse {
     connectionId: string;
     availableUserId: string
+}
+
+export interface ConnectionToAcceptResponse
+{
+    connectionId: string;
+    userSenderId: string;
+    date: string;
 }

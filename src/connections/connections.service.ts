@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Connections} from "./connections.entity";
 import {Repository} from "typeorm";
-import {ConnectionsDto} from "./dto/connections.dto";
+import {NewConnectionsDto} from "./dto/newConnectionsDto";
 import {User} from "../user/user.entity";
 import {
-    AvailableConnection,
+    AvailableConnectionResponse, ConnectionToAcceptResponse,
     SendNewConnectionResponse
 } from "../interfaces/connections.interface";
 
@@ -18,11 +18,11 @@ export class ConnectionsService {
     }
 
 
-   async createConnection(newConnection: ConnectionsDto, user: User): Promise<SendNewConnectionResponse>{
+   async createConnection(newConnection: NewConnectionsDto, user: User): Promise<SendNewConnectionResponse>{
         const connections = new Connections();
         connections.sendFrom = user.id
         connections.sendTo = newConnection.sendTo
-        connections.isAccepted = 1; //TODO it should be replace to false when AcceptConnections will be created
+        connections.isAccepted = true; //TODO it should be replace to false when AcceptConnections will be created
 
       await this.connectionsRepository.save(connections);
 
@@ -31,12 +31,33 @@ export class ConnectionsService {
        };
     }
 
-    async listOfConnections(user: User): Promise<AvailableConnection[]>{
+    async listOfConnectionToAccept(user: User): Promise<ConnectionToAcceptResponse[]>{
 
-        const result = [] as Array <AvailableConnection>;
+        const result = [] as Array<ConnectionToAcceptResponse>
+        const listOfConnectionToAccept = await this.connectionsRepository.find({
+            select:['sendFrom', 'id', 'createdAt'],
+            where: {sendTo: user.id, isAccepted: false}
+        })
+
+        listOfConnectionToAccept.map((obj) => {
+            result.push({
+                connectionId: obj.id,
+                userSenderId: obj.sendFrom,
+                date: obj.createdAt
+            })
+        })
+
+        return result;
+    }
+
+
+
+    async listOfAvailableConnections(user: User): Promise<AvailableConnectionResponse[]>{
+
+        const result = [] as Array <AvailableConnectionResponse>;
         const listOfRequestConnection = await this.connectionsRepository.find({
             select: ['sendTo', 'id'],
-            where: {isAccepted: 1}
+            where: {isAccepted: true}
         });
 
         listOfRequestConnection.map((obj) => {

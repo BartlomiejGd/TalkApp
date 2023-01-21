@@ -24,8 +24,8 @@ export class SendMessageGuard extends AuthGuard('jwt') {
 
         //check connetions between sender and reciver
          const result = await this.connectionsRepository.count({where: [
-                {sendFrom: user.id, sendTo:body.messageTo, isAccepted :1},
-                {sendFrom:body.messageTo, sendTo:user.id, isAccepted: 1}
+                {sendFrom: user.id, sendTo:body.messageTo, isAccepted :true},
+                {sendFrom:body.messageTo, sendTo:user.id, isAccepted: true}
             ]});
 
         return result >= 1 ? true : false // ternary operator
