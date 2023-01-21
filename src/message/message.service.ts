@@ -16,19 +16,9 @@ export class MessageService {
     ) {
     }
 
-    async userAreConnected(sender: string, reciver: string): Promise<boolean>{
-
-        const result = await this.connectionsRepository.findOne({where: [
-                {sendFrom: sender, sendTo:reciver, isAccepted :1},
-                {sendFrom:reciver, sendTo:sender, isAccepted: 1}
-            ]});
-                console.log('result: ' + result);
-        return true;
-    }
-
     async handleMessage(newMessage: SendTxtMessageDto, user: User): Promise<SendMessageResponse>
     {
-        this.userAreConnected(user.id, newMessage.messageTo)
+      //  this.userAreConnected(user.id, newMessage.messageTo)
 
         const message = new MessagesBase();
         message.messageFrom = user.id;

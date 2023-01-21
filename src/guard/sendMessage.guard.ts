@@ -1,22 +1,34 @@
 import {ExecutionContext, Injectable} from "@nestjs/common";
 import {AuthGuard} from "@nestjs/passport";
 import {SendTxtMessageDto} from "../message/dto/send-txt-message.dto";
+import {InjectRepository} from "@nestjs/typeorm";
+import {Connections} from "../connections/connections.entity";
+import {Repository} from "typeorm";
 
 @Injectable()
 export class SendMessageGuard extends AuthGuard('jwt') {
+
+    constructor(
+        @InjectRepository(Connections) private connectionsRepository: Repository<Connections>,
+    ) {
+       super();
+    }
     async canActivate(context: ExecutionContext): Promise<boolean> {
 
-        // call AuthGuard in order to ensure user is injected in request
-        const baseGuardResult = await super.canActivate(context);
-        if(!baseGuardResult){
-            // unsuccessful authentication return false
-            return false;
-        }
-        // successfull authentication, user is injected
+        //cant get {user} without this line
+       const baseGuardResult = await super.canActivate(context);
+
+        //get objects
         const {user} = context.switchToHttp().getRequest();
+        const {body} = context.switchToHttp().getRequest();
 
-            //Finish it!
+        //check connetions between sender and reciver
+         const result = await this.connectionsRepository.count({where: [
+                {sendFrom: user.id, sendTo:body.messageTo, isAccepted :1},
+                {sendFrom:body.messageTo, sendTo:user.id, isAccepted: 1}
+            ]});
 
-        return false
+        return result >= 1 ? true : false // ternary operator
+
     }
 }
