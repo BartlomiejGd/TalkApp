@@ -8,31 +8,31 @@
   <p align="center">Simply chat application based on NestJS framework and SQLite database </p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/github/directory-file-count/bartlomiejgd/talkapp" alt="CircleCI" /></a>
-<img src="https://img.shields.io/tokei/lines/github.com/bartlomiejgd/talkapp"</p>
+</p>
 
 ## Description
 
-TalkApp is example not real time chat application based on relational database and NestJS framework.
+TalkApp is simply example chat application based on relational database and NestJS framework.
 
 Repository contain .env file which allow to run application on your environment, all secret keys are in file.
 
 
 ## Techniques used in project
 
-- Guards ✅
-- Authentication /Authorization ✅
-- Decorators ✅
-- interfaces ✅
-- Environment variables ✅
-- Pipes ✅
-- TypeORM ✅
+- Guards 
+- Authentication /Authorization 
+- - Paspassport-jwt
+- Decorators 
+- interfaces 
+- Environment variables 
+- Pipes 
+- TypeORM
 - - SQLite
 - Pagination 
-- 3 layer pattern ✅
+- 3 layer pattern 
 - E-mail confirmation account (not finished)
-- CRUD ✅
-- Filtered return ✅
+- CRUD 
+- Filtered return 
 
 ## API Endpoits
 
