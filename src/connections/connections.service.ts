@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Connections} from "./connections.entity";
 import {Repository} from "typeorm";
-import {NewConnectionsDto} from "./dto/newConnectionsDto";
+import {NewConnectionsDto} from "./dto/newConnections.dto";
 import {User} from "../user/user.entity";
 import {
     AcceptConnectionResponse,
     AvailableConnectionResponse, ConnectionToAcceptResponse,
     SendNewConnectionResponse
 } from "../interfaces/connections.interface";
+import {AcceptConnectionsDto} from "./dto/acceptConnections.dto";
 
 @Injectable()
 export class ConnectionsService {
@@ -51,14 +52,18 @@ export class ConnectionsService {
         return result;
     }
 
-    async acceptConnection(user: User): Promise<AcceptConnectionResponse>
-    {
-        //todo finish it
-
-        return {
-            isSuccess: true
-        }
+    async acceptConnection(acceptConnectionsDto: AcceptConnectionsDto ,user: User): Promise<AcceptConnectionResponse> {
+      try {
+          await this.connectionsRepository.save({
+                  id: acceptConnectionsDto.idConnection,
+                  isAccepted: true,
+              }
+          ); return {isSuccess:true}
+      } catch (e){
+        return {isSuccess: false}
+      }
     }
+
 
     async listOfAvailableConnections(user: User): Promise<AvailableConnectionResponse[]>{
 
@@ -71,8 +76,6 @@ export class ConnectionsService {
         listOfRequestConnection.map((obj) => {
             result.push({connectionId: obj.id, availableUserId: obj.sendTo})
         })
-
-        console.log(result)
 
         return result ;
     }
