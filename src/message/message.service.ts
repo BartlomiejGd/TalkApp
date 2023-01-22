@@ -16,10 +16,9 @@ export class MessageService {
     ) {
     }
 
+    //Send Message to connected user [add record to db]
     async handleMessage(newMessage: SendTxtMessageDto, user: User): Promise<SendMessageResponse>
     {
-      //  this.userAreConnected(user.id, newMessage.messageTo)
-
         const message = new MessagesBase();
         message.messageFrom = user.id;
         message.messageTo = newMessage.messageTo;
@@ -32,6 +31,7 @@ export class MessageService {
         };
     }
 
+    //get conversation with ConversationId
     async getConversation(ConversationId: string): Promise<GetConversationResponse>{
         return await this.messagesBaseRepository.findBy( {messageConversationId: ConversationId});
     }

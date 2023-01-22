@@ -5,6 +5,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Connections} from "../connections/connections.entity";
 import {Repository} from "typeorm";
 
+//Guard which check connections between user before send message
 @Injectable()
 export class SendMessageGuard extends AuthGuard('jwt') {
 

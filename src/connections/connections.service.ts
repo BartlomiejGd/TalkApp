@@ -19,12 +19,12 @@ export class ConnectionsService {
     ) {
     }
 
-
+    //method which create new connection between users
    async createConnection(newConnection: NewConnectionsDto, user: User): Promise<SendNewConnectionResponse>{
         const connections = new Connections();
         connections.sendFrom = user.id
         connections.sendTo = newConnection.sendTo
-        connections.isAccepted = true; //TODO it should be replace to false when AcceptConnections will be created
+        connections.isAccepted = false;
 
       await this.connectionsRepository.save(connections);
 
@@ -33,6 +33,7 @@ export class ConnectionsService {
        };
     }
 
+    //method which return list of connection to accept
     async listOfConnectionToAccept(user: User): Promise<ConnectionToAcceptResponse[]>{
 
         const result = [] as Array<ConnectionToAcceptResponse>
@@ -52,6 +53,7 @@ export class ConnectionsService {
         return result;
     }
 
+    //method which accept connection between users [update row in db]
     async acceptConnection(acceptConnectionsDto: AcceptConnectionsDto ,user: User): Promise<AcceptConnectionResponse> {
       try {
           await this.connectionsRepository.save({
@@ -64,7 +66,7 @@ export class ConnectionsService {
       }
     }
 
-
+    //method which return list of accepted connection between users
     async listOfAvailableConnections(user: User): Promise<AvailableConnectionResponse[]>{
 
         const result = [] as Array <AvailableConnectionResponse>;

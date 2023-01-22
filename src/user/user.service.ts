@@ -13,6 +13,7 @@ export class UserService {
         @InjectRepository(User) private userRepository: Repository<User>,
     ) {}
 
+    //register new user
     async registerNewUser(
         newUser: RegisterUserDto,
     ): Promise<RegisterUserResponse> {

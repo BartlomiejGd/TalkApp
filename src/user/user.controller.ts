@@ -8,6 +8,7 @@ export class UserController {
 
     constructor(@Inject(UserService) private userService: UserService) {}
 
+    //register new user
     @Post('/register')
     async register(
         @Body() newUser: RegisterUserDto,

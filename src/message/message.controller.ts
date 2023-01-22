@@ -15,6 +15,7 @@ export class MessageController {
     ) {
     }
 
+    //Send Message to connected user
     @UseGuards(AuthGuard('jwt'))
     @UseGuards(SendMessageGuard)
     @Post('/sendTxtMessage')
@@ -23,6 +24,7 @@ export class MessageController {
         return this.messageSevice.handleMessage(newTxtMessage, user);
     }
 
+    //get conversation with ConversationId
     @UseGuards(AuthGuard('jwt'))
     @Get('/GetConversation/:ConversationId')
     getConversation(@Param('ConversationId') messageConversationId: string): Promise<GetConversationResponse>{
