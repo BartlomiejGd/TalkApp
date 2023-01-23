@@ -7,7 +7,7 @@ import {ConfigModule} from "@nestjs/config";
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConnectionsModule } from './connections/connections.module';
-import { EmailModule } from './email/email.module';
+import { EmailModule } from './emailConfirmation/email.module';
 
 
 @Module({

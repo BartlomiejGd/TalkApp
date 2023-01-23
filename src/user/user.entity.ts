@@ -15,7 +15,7 @@ export class User {
     currentTokenID: string | null;
 
     @Column({default: false})
-    isActivated: boolean;
+    emailIsActivated: boolean;
 
     @Column({default: ()=> 'CURRENT_TIMESTAMP'})
     createAtTimestamp: string;
