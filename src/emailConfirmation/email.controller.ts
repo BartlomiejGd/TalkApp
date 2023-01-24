@@ -10,7 +10,7 @@ export class EmailController {
     }
 
     @Get('/confirmation/:param')
-    emailConfirmation(@Param('param') param: string): Promise<any>{
+    emailConfirmation(@Param('param') param: string): Promise<boolean>{
 
         return this.emailService.confirmMail(param)
     }

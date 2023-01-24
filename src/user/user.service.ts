@@ -1,16 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "./user.entity";
 import {Repository} from "typeorm";
 import { hashPwd } from '../utility/hash';
 import {RegisterUserDto} from "./dto/user.dto";
 import {RegisterUserResponse} from "../interfaces/user.interface";
+import {EmailService} from "../emailConfirmation/email.service";
 
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
+        @Inject(EmailService) private emailService: EmailService,
     ) {}
 
     //register new user
@@ -20,9 +22,19 @@ export class UserService {
         const user = new User();
         user.email = newUser.email;
         user.pwdHash = hashPwd(newUser.pwd);
-        console.log(`New User has been created!`);
 
-        return await this.userRepository.save(user); //save to db
+        await this.userRepository.save(user); //save to db
+        console.log(`LOG >>>> New User has been created!`);
+
+        const readRecord = await this.userRepository.findOne({
+            where: {email : user.email}})
+        //send confimration email
+        await this.emailService.emailPayload(readRecord.id)
+
+        return{
+            id: readRecord.id,
+            email: readRecord.email
+        }
 
     }
 
