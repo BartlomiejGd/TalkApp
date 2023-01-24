@@ -15,10 +15,9 @@ export class UserService {
         @Inject(EmailService) private emailService: EmailService,
     ) {}
 
-    //register new user
-    async registerNewUser(
-        newUser: RegisterUserDto,
-    ): Promise<RegisterUserResponse> {
+    //register new user >>> send confirmation email
+    async registerNewUser(newUser: RegisterUserDto,): Promise<RegisterUserResponse>{
+
         const user = new User();
         user.email = newUser.email;
         user.pwdHash = hashPwd(newUser.pwd);
@@ -26,6 +25,7 @@ export class UserService {
         await this.userRepository.save(user); //save to db
         console.log(`LOG >>>> New User has been created!`);
 
+        //check record id to prepare confirmation email link
         const readRecord = await this.userRepository.findOne({
             where: {email : user.email}})
         //send confimration email

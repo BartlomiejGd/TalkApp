@@ -14,6 +14,8 @@ export class EmailService {
     //////////////////////////////////
     ///      DUMMY MAIL SENDER     ///
     //////////////////////////////////
+
+    //this method prepare email payload to confirm email
     async emailPayload(userID: string): Promise<string>{
 
         const payload = `To confirm your email click this link >>>> http://localhost:3000/api/v1/email/confirmation/${userID}`
@@ -22,6 +24,9 @@ export class EmailService {
         return payload
     }
 
+
+    //this function is a handler to click confirmation link when find user id in Get request in :param: set
+    //emailIsActivated to true
     async confirmMail(param: string): Promise<boolean>{
 
         const emailToAccept = await this.userRepository.findOneOrFail({
