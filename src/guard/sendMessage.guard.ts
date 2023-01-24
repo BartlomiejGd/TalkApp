@@ -24,12 +24,12 @@ export class SendMessageGuard extends AuthGuard('jwt') {
         const {body} = context.switchToHttp().getRequest();
 
         //check connetions between sender and reciver
-         const result = await this.connectionsRepository.count({where: [
+         const result = await this.connectionsRepository.exist({where: [
                 {sendFrom: user.id, sendTo:body.messageTo, isAccepted :true},
                 {sendFrom:body.messageTo, sendTo:user.id, isAccepted: true}
             ]});
 
-        return result >= 1 ? true : false // ternary operator
+        return result ? true : false // ternary operator
 
     }
 }
