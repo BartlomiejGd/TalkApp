@@ -9,6 +9,7 @@ import {AuthGuard} from "@nestjs/passport";
 import {UserObj} from "../decorators/user-obj.decorator";
 import {User} from "../user/user.entity";
 import {SendMessageGuard} from "../guard/sendMessage.guard";
+import {GetConversationDto} from "./dto/get-conversation.dto";
 
 @Controller('message')
 export class MessageController {
@@ -29,9 +30,9 @@ export class MessageController {
 
     //get conversation with ConversationId
     @UseGuards(AuthGuard('jwt'))
-    @Get('/GetConversation/:ConversationId')
-    getConversation(@Param('ConversationId') messageConversationId: string): Promise<GetPaginatedConversationResponse>{
-        return this.messageSevice.getConversation(messageConversationId);
+    @Get('/GetConversation/:ConversationId/:Page')
+    getConversation(@Param() params: GetConversationDto): Promise<GetPaginatedConversationResponse>{
+        return this.messageSevice.getConversation(params);
     }
 
 }

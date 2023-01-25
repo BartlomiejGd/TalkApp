@@ -48,7 +48,7 @@ Repository contains .env file which allow to run application on your environment
 
 /api/v1/message/sendTxtMessage -[POST]
 
-/api/v1/message/GetConversation/:ConversationId -[GET]
+/api/v1/message/GetConversation/:ConversationId/:Page -[GET]
 
 /api/v1/connections/newConnection -[POST]
 

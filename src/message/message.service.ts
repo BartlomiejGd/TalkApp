@@ -10,6 +10,7 @@ import {
 import {User} from "../user/user.entity";
 import {Connections} from "../connections/connections.entity";
 import {take} from "rxjs";
+import {GetConversationDto} from "./dto/get-conversation.dto";
 
 @Injectable()
 export class MessageService {
@@ -41,16 +42,16 @@ export class MessageService {
     }
 
     //get conversation with pagination [by ConversationId]
-    async getConversation(ConversationId: string): Promise<GetPaginatedConversationResponse> {
+    async getConversation(params: GetConversationDto): Promise<GetPaginatedConversationResponse> {
+
+        //max item per request
         const maxPerPage = 5;
-        const currentPage = 0;
 
         const [messages, pagesCount] = await this.messagesBaseRepository.findAndCount({
-            where: {messageConversationId: ConversationId},
-            skip: maxPerPage * (currentPage - 1),
-            take: maxPerPage
+            where: {messageConversationId: params.ConversationId}, //conditions
+            skip: maxPerPage * (params.Page - 1),   //skip pages from :pages in dto
+            take: maxPerPage                        //how many items should be in request
         });
-
 
         return {
             messages,
