@@ -10,4 +10,8 @@ export interface SendMessageResponse {
     isSuccess: boolean;
 }
 
-export type GetConversationResponse = GetMessageResponse[];
+export interface GetPaginatedConversationResponse {
+    messages: GetMessageResponse[];
+    pagesCount: number;
+
+}

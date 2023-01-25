@@ -3,9 +3,13 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {MessagesBase} from "./message.entity";
 import {Repository} from "typeorm";
 import {SendTxtMessageDto} from "./dto/send-txt-message.dto";
-import {GetConversationResponse, SendMessageResponse} from "../interfaces/message.interface";
+import {
+    GetPaginatedConversationResponse,
+    SendMessageResponse
+} from "../interfaces/message.interface";
 import {User} from "../user/user.entity";
 import {Connections} from "../connections/connections.entity";
+import {take} from "rxjs";
 
 @Injectable()
 export class MessageService {
@@ -24,6 +28,11 @@ export class MessageService {
         message.messageTo = newMessage.messageTo;
         message.messagePayload = newMessage.messagePayload;
 
+        message.messageConversationId = (await this.connectionsRepository.findOne({where: [
+                            {sendFrom: user.id, sendTo:message.messageTo, isAccepted :true},
+                            {sendFrom:message.messageTo, sendTo:user.id, isAccepted: true}
+                            ]})).id;
+
         await this.messagesBaseRepository.save(message);
 
         return {
@@ -31,8 +40,22 @@ export class MessageService {
         };
     }
 
-    //get conversation with ConversationId
-    async getConversation(ConversationId: string): Promise<GetConversationResponse>{
-        return await this.messagesBaseRepository.findBy( {messageConversationId: ConversationId});
+    //get conversation with pagination [by ConversationId]
+    async getConversation(ConversationId: string): Promise<GetPaginatedConversationResponse> {
+        const maxPerPage = 5;
+        const currentPage = 0;
+
+        const [messages, pagesCount] = await this.messagesBaseRepository.findAndCount({
+            where: {messageConversationId: ConversationId},
+            skip: maxPerPage * (currentPage - 1),
+            take: maxPerPage
+        });
+
+
+        return {
+            messages,
+            pagesCount,
+        }
     }
-}
+    }
+

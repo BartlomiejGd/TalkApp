@@ -14,30 +14,33 @@
 
 TalkApp is simply example chat application based on relational database and NestJS framework.
 
-Repository contain .env file which allow to run application on your environment, all secret keys are in file.
+Repository contains .env file which allow to run application on your environment, all secret keys are in file.
 
 
 ## Techniques used in project
 
 - Guards 
-- Authentication /Authorization 
+- Unit test
+- - Jest Framework
+- Authentication / Authorization 
 - - Paspassport-jwt
 - Decorators 
-- interfaces 
+- Interfaces 
 - Environment variables 
 - Pipes 
 - TypeORM
 - - SQLite
-- Pagination 
-- 3 layer pattern 
-- E-mail confirmation account (not finished)
+- Pagination
+- E-mail confirmation account
 - CRUD 
-- Filtered return 
+- Filtered response 
 
 ## API Endpoits
 
 ```
 /api/v1/user/register -[POST]
+
+/api/v1/email/confirmation/:param -[GET]
 
 /api/v1/auth/login -[POST]
 

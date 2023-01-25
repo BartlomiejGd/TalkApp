@@ -1,7 +1,10 @@
 import {Body, Controller, Get, Inject, Param, Post, UseGuards} from '@nestjs/common';
 import {MessageService} from "./message.service";
 import {SendTxtMessageDto} from "./dto/send-txt-message.dto";
-import {GetConversationResponse, SendMessageResponse} from "../interfaces/message.interface";
+import {
+    GetPaginatedConversationResponse,
+    SendMessageResponse
+} from "../interfaces/message.interface";
 import {AuthGuard} from "@nestjs/passport";
 import {UserObj} from "../decorators/user-obj.decorator";
 import {User} from "../user/user.entity";
@@ -27,7 +30,7 @@ export class MessageController {
     //get conversation with ConversationId
     @UseGuards(AuthGuard('jwt'))
     @Get('/GetConversation/:ConversationId')
-    getConversation(@Param('ConversationId') messageConversationId: string): Promise<GetConversationResponse>{
+    getConversation(@Param('ConversationId') messageConversationId: string): Promise<GetPaginatedConversationResponse>{
         return this.messageSevice.getConversation(messageConversationId);
     }
 
