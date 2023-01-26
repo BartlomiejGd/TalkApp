@@ -13,31 +13,53 @@ export class UserService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
         @Inject(EmailService) private emailService: EmailService,
-    ) {}
+    ) {
+    }
 
     //register new user >>> send confirmation email
-    async registerNewUser(newUser: RegisterUserDto,): Promise<RegisterUserResponse>{
+    async registerNewUser(newUser: RegisterUserDto,): Promise<RegisterUserResponse> {
 
-        const user = new User();
-        user.email = newUser.email;
-        user.pwdHash = hashPwd(newUser.pwd);
+        //Check each param on server site (extend validation on server too!)
+        const emailIsOkServerCheck = !(await this.userRepository.exist({where: {email: newUser.email}}))
+        const nickIsOKServerCheck = !(await this.userRepository.exist({where: {nick: newUser.nick}}))
+        const pwdMatchServerCheck = newUser.pwd === newUser.repwd ? true : false
 
-        await this.userRepository.save(user); //save to db
-        console.log(`LOG >>>> New User has been created!`);
+        if (emailIsOkServerCheck && nickIsOKServerCheck && pwdMatchServerCheck) {
+            const user = new User();
+            user.email = newUser.email;
+            user.pwdHash = hashPwd(newUser.pwd);
+            user.nick = newUser.nick;
 
-        //check record id to prepare confirmation email link
-        const readRecord = await this.userRepository.findOne({
-            where: {email : user.email}})
-        //send confimration email
-        await this.emailService.emailPayload(readRecord.id)
+            await this.userRepository.save(user); //save to db
+            console.log(`LOG >>>> New User has been created!`);
 
-        return{
-            id: readRecord.id,
-            email: readRecord.email
+            //TODO export below to new method!
+            //check record id to prepare confirmation email link
+            // const readRecord = await this.userRepository.findOne({
+            // where: {email : user.email}})
+            //send confimration email
+            // await this.emailService.emailPayload(readRecord.id)
+
+            return {
+                emailIsOk: emailIsOkServerCheck,
+                nickIsOK: nickIsOKServerCheck,
+                pwdMatch: pwdMatchServerCheck,
+                accountCreated: true
+            }
+        } else {
+            return {
+                emailIsOk: emailIsOkServerCheck,
+                nickIsOK: nickIsOKServerCheck,
+                pwdMatch: pwdMatchServerCheck,
+                accountCreated: false
+        }
         }
 
     }
-
-
 }
+
+
+
+
+
 

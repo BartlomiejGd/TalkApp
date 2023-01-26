@@ -1,4 +1,6 @@
 export interface RegisterUserResponse {
-  id: string;
-  email: string;
+emailIsOk: boolean;
+nickIsOK: boolean;
+pwdMatch: boolean;
+accountCreated: boolean;
 }
