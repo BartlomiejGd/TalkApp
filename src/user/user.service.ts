@@ -33,12 +33,7 @@ export class UserService {
             await this.userRepository.save(user); //save to db
             console.log(`LOG >>>> New User has been created!`);
 
-            //TODO export below to new method!
-            //check record id to prepare confirmation email link
-            // const readRecord = await this.userRepository.findOne({
-            // where: {email : user.email}})
-            //send confimration email
-            // await this.emailService.emailPayload(readRecord.id)
+            await this.handleConfirmationAccount(user.email);
 
             return {
                 emailIsOk: emailIsOkServerCheck,
@@ -54,7 +49,18 @@ export class UserService {
                 accountCreated: false
         }
         }
+    }
 
+     async handleConfirmationAccount(emailAdress: string): Promise<boolean>{
+
+        //check record id to prepare confirmation email link
+         const readRecord = await this.userRepository.findOne({
+         where: {email : emailAdress}})
+
+        //send confimration email
+        await this.emailService.emailPayload(readRecord.id)
+
+        return true;
     }
 }
 
