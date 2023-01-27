@@ -22,6 +22,7 @@ Repository contains .env file which allow to run application on your environment
 - Guards 
 - Unit test
 - - Jest Framework
+- - Mocking a Database
 - Authentication / Authorization 
 - - Paspassport-jwt
 - Decorators 
