@@ -2,31 +2,32 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import {getRepositoryToken, InjectRepository} from "@nestjs/typeorm";
 import {User} from "./user.entity";
-import {Repository} from "typeorm";
-import {Inject} from "@nestjs/common";
+import {UserModule} from "./user.module";
 import {EmailService} from "../emailConfirmation/email.service";
 
-const mockUserRepository = () => ({
 
-});
 describe('UserService', () => {
-  let service: UserService;
-  let userRepository: Repository<User>
 
+  let userService: UserService;
+  let userMockRepository = {
+
+  }
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+          EmailService,
           UserService,
           {      provide: getRepositoryToken(User),
-            useClass: Repository,}
+                 useValue: userMockRepository,}
       ],
+
     }).compile();
 
-    service = module.get<UserService>(UserService);
+    userService = module.get<UserService>(UserService);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(userService).toBeDefined();
   });
 });
