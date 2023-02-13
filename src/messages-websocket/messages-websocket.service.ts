@@ -11,16 +11,4 @@ export class MessagesWebsocketService {
   findAll() {
     return `This action returns all messagesWebsocket`;
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} messagesWebsocket`;
-  }
-
-  update(id: number, updateMessagesWebsocketDto: UpdateMessagesWebsocketDto) {
-    return `This action updates a #${id} messagesWebsocket`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} messagesWebsocket`;
-  }
 }
