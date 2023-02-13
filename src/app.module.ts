@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConnectionsModule } from './connections/connections.module';
 import { EmailModule } from './emailConfirmation/email.module';
+import { MessagesWebsocketModule } from './messages-websocket/messages-websocket.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { EmailModule } from './emailConfirmation/email.module';
   AuthModule,
   ConnectionsModule,
   EmailModule,
+  MessagesWebsocketModule,
   ],
   controllers: [AppController],
   providers: [AppService],
