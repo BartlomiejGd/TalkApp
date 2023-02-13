@@ -5,7 +5,7 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">Simply chat application based on NestJS framework and SQLite database </p>
+  <p align="center">Simply real time chat application based on NestJS framework, WebSocket and SQLite database </p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 </p>
@@ -20,6 +20,8 @@ Repository contains .env file which allow to run application on your environment
 ## Techniques used in project
 
 - Guards 
+- WebSocket
+- - Socket.io
 - Unit test
 - - Jest Framework
 - - Mocking a Database
@@ -28,7 +30,6 @@ Repository contains .env file which allow to run application on your environment
 - Decorators 
 - Interfaces 
 - Environment variables 
-- Pipes 
 - TypeORM
 - - SQLite
 - Pagination
