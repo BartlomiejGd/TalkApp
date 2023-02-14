@@ -26,4 +26,14 @@ export class MessagesWebsocketGateway {
   findAll() {
     return this.messagesWebsocketService.findAll();
   }
+
+  @SubscribeMessage('typing')
+  async typing() {
+    //todo
+  }
+
+  @SubscribeMessage('join')
+  join() {
+    //todo
+  }
 }
