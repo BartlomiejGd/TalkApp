@@ -1,1 +1,4 @@
-export class MessagesWebsocket {}
+export class MessagesWebsocket {
+  name: string;
+  text: string;
+}
