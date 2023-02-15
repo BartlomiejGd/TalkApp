@@ -7,6 +7,6 @@ async function bootstrap() {
 
   app.use(cookieParser());
   app.setGlobalPrefix('api/v1');
-  await app.listen(3001);
+  await app.listen(3000);
 }
 bootstrap();
