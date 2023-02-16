@@ -5,7 +5,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 
-@WebSocketGateway(80, { path: '/aa' })
+@WebSocketGateway(80, { namespace: 'app' })
 export class ChatGateway {
   @WebSocketServer()
   server;
