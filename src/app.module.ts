@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConnectionsModule } from './connections/connections.module';
 import { EmailModule } from './emailConfirmation/email.module';
+import { ChatGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { EmailModule } from './emailConfirmation/email.module';
     EmailModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}
