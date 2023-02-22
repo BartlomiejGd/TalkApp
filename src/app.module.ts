@@ -8,7 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConnectionsModule } from './connections/connections.module';
 import { EmailModule } from './emailConfirmation/email.module';
-import { ChatGateway } from './app.gateway';
+import { appEventsGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -28,6 +28,6 @@ import { ChatGateway } from './app.gateway';
     EmailModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ChatGateway],
+  providers: [AppService, appEventsGateway],
 })
 export class AppModule {}

@@ -1,18 +1,36 @@
 import {
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  WsResponse,
 } from '@nestjs/websockets';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway(80, { namespace: 'app' })
-export class ChatGateway {
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class appEventsGateway {
   @WebSocketServer()
-  server;
+  server: Server;
 
-  @SubscribeMessage('message')
-  handleMessage(@MessageBody() message: string): void {
-    console.log('aaaa');
-    this.server.emit('message', message);
+  @SubscribeMessage('msgToServer')
+  handleMessage(client: Socket, payload: string): void {
+    this.server.emit('msgToClient', payload);
+    console.log(`MESSAGE SEND TO SERVER:${payload}`);
+  }
+
+  @SubscribeMessage('events')
+  handleEvent(
+    @MessageBody() data: string,
+    @ConnectedSocket() client: Socket,
+  ): string {
+    console.log(client.id);
+    return data;
   }
 }
